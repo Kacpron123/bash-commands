@@ -113,12 +113,14 @@ cppmake(){
          if [ ! -d build ];then
             mkdir build
          fi
+         # subshell
+         (
          cd build
          if [ ! -f Makefile ];then
-            cmake ..
+            cmake ..  > /dev/null
          fi
-         make && ./${projectname}
-         cd ..
+         make > /dev/null && ./${projectname} "$@"
+         )
       fi
 }
 
@@ -134,5 +136,13 @@ cpprmbuild(){
    fi
 }
 cpptar(){
-   tar --exclude='./build' -czvf project.tar.gz *
+   tar --exclude='build' -czvf project.tar.gz *
 }
+cpprun(){
+   if [ ! -d build ]; then
+      mkdir build
+   fi
+   g++ Main.cpp -o build/Main
+   ./build/Main
+}
+

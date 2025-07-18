@@ -65,3 +65,6 @@ jvmake(){
 jvrun(){
    java $fileout/$@
 }
+jvtree(){
+   tree -I target
+}
